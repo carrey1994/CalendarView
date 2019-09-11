@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/allura</item>
+        <item>@font/atma_medium</item>
+        <item>@font/delius_swash_caps</item>
+        <item>@font/iceberg</item>
+        <item>@font/press_start_2p</item>
+        <item>@font/walter_turncoat</item>
+        <item>@font/yatra_one</item>
+    </array>
+</resources>
