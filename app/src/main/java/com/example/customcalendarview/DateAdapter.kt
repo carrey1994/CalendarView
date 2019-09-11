@@ -57,7 +57,9 @@ class DateAdapter(
         return dateViewHolder
     }
 
-    override fun getItemCount(): Int = if (dateOffset == 6 || (dateOffset==5 && mCalendar.get(Calendar.DAY_OF_MONTH)==31)) 42 else 35 //42
+    override fun getItemCount(): Int =
+//        if (dateOffset == 6 || (dateOffset==5 && mCalendar.get(Calendar.DAY_OF_MONTH)==31)) 42 else 35
+    42
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
