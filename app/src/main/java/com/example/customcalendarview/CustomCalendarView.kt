@@ -35,10 +35,13 @@ class CustomCalendarView : LinearLayout {
 
     private val rvCalendar: RecyclerView
 
+    private val tvClear: TextView
+
     private lateinit var yearPicker: YearPicker
 
     private lateinit var monthPicker: MonthPicker
 
+    private lateinit var adapter: DateAdapter
 
     init {
         val view = View.inflate(context, R.layout.layout_calendar, null)
@@ -47,6 +50,7 @@ class CustomCalendarView : LinearLayout {
         tvYear = view.findViewById(R.id.tv_year)
         tvMonth = view.findViewById(R.id.tv_month)
         rvCalendar = view.findViewById(R.id.rv_calendar)
+        tvClear = view.findViewById(R.id.tv_clear)
 
 
         //set year
@@ -78,6 +82,10 @@ class CustomCalendarView : LinearLayout {
             })
         }
 
+        tvClear.setOnClickListener {
+            adapter.clearPickDates()
+        }
+
         rvCalendar.layoutManager = GridLayoutManager(context, 7)
         this.addView(view)
     }
@@ -96,13 +104,12 @@ class CustomCalendarView : LinearLayout {
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.DATE, 1)
-        val adapter =
-            DateAdapter(context, calendar, calendar.get(Calendar.YEAR), month)
+        adapter = DateAdapter(context, calendar, calendar.get(Calendar.YEAR), month)
         rvCalendar.adapter = adapter
     }
 
     fun setDateListener(dateListener: DateAdapter.DateListener) {
-        (rvCalendar.adapter as DateAdapter).setDateListener(dateListener)
+        adapter.setDateListener(dateListener)
     }
 
 

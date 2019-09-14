@@ -32,6 +32,19 @@
                 android:textSize="36dp" />
 
             <TextView
+                android:id="@+id/tv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/iceberg"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:text="Reset"
+                android:textColor="#D76735"
+                android:textSize="36dp" />
+
+            <TextView
                 android:id="@+id/tv_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
