@@ -2,7 +2,9 @@ package com.example.customcalendarview
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -81,7 +83,7 @@ class DateAdapter(
                     if (pickDates.size < 2) {
                         it.isSelected = !it.isSelected
                         dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
-                        pickDates.add(getLongFromDate("${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"))
+                        pickDates.add(getLongFromDate(dateText))
                         holder.flDate.isSelected = it.isSelected
                         switchBackground(holder.flDate, dateText)
                         notifyDataSetChanged()
@@ -98,7 +100,7 @@ class DateAdapter(
                     if (pickDates.size < 2) {
                         it.isSelected = !it.isSelected
                         dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
-                        pickDates.add(getLongFromDate("${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"))
+                        pickDates.add(getLongFromDate(dateText))
                         holder.flDate.isSelected = it.isSelected
                         switchBackground(holder.flDate, dateText)
                         notifyDataSetChanged()
@@ -177,6 +179,7 @@ class DateAdapter(
         pickDates.sort()
         if (pickDates.isEmpty())
             bgLayout.isSelected = false
+        Log.e("Pick2Date===", "${pickDates}===")
 
         if (pickDates.size == 1 && getLongFromDate(dateText) == pickDates.first()) {
             bgLayout.isSelected = true
@@ -185,6 +188,7 @@ class DateAdapter(
         } else if (pickDates.isNotEmpty())
             when {
                 getLongFromDate(dateText) == pickDates.first() -> {
+                    Log.e("theDateText===", "$dateText===")
                     bgLayout.isSelected = true
                     bgLayout.background = ContextCompat.getDrawable(
                         context, R.drawable.selector_left_shape
@@ -201,6 +205,9 @@ class DateAdapter(
                     bgLayout.background = ContextCompat.getDrawable(
                         context, R.drawable.selector_mid_shape
                     )
+                }
+                else -> {
+                    bgLayout.isSelected = false
                 }
             }
     }
