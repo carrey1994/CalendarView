@@ -1,15 +1,15 @@
 package com.example.customcalendarview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DateAdapter(
@@ -26,7 +26,7 @@ class DateAdapter(
 
     private val dateOffset = mCalendar.get(Calendar.DAY_OF_WEEK) - 1
 
-    private val pickDates = arrayListOf<Int>()
+    private val pickDates = arrayListOf<Long>()
 
     private lateinit var dateListener: DateListener
 
@@ -74,114 +74,41 @@ class DateAdapter(
             is TodayViewHolder -> {
                 mCalendar.add(Calendar.DATE, position - dateOffset)
                 holder.tvDate.text = mCalendar.get(Calendar.DATE).toString()
-                val fn = {
-                    pickDates.sort()
-                    if (pickDates.isEmpty())
-                        holder.clDate.isSelected = false
-                    else if (pickDates.size == 1 && pickDates.first() == holder.tvDate.text.toString().toInt()) {
-                        holder.clDate.isSelected = true
-                        holder.clDate.background =
-                            ContextCompat.getDrawable(context, R.drawable.shape_circle)
-                    } else
-                        if (pickDates.isNotEmpty())
-                            when {
-                                holder.tvDate.text.toString().toInt() == pickDates.first() -> {
-                                    Log.e("pickDates.first()===", "${pickDates.first()}")
-                                    holder.clDate.isSelected = true
-                                    holder.clDate.background =
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.selector_left_shape
-                                        )
-                                }
-                                holder.tvDate.text.toString().toInt() == pickDates.last() -> {
-                                    Log.e("pickDates.last()===", "${pickDates.last()}")
-                                    holder.clDate.isSelected = true
-                                    holder.clDate.background =
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.selector_right_shape
-                                        )
-                                }
-                                (holder.tvDate.text.toString().toInt() in pickDates.first()..pickDates.last()) -> {
-                                    Log.e("pickDates.else()===", "${holder.tvDate.text}")
-                                    holder.clDate.isSelected = true
-                                    holder.clDate.background =
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.selector_mid_shape
-                                        )
-                                }
-                            }
-                }
-                fn()
+                val dateText = "${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"
+                switchBackground(holder.flDate, dateText)
+
                 holder.tvDate.setOnClickListener {
-                    it.isSelected = !it.isSelected
-                    dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
-                    pickDates.add(holder.tvDate.text.toString().toInt())
-                    holder.clDate.isSelected = it.isSelected
-                    fn()
-                    notifyDataSetChanged()
+                    if (pickDates.size < 2) {
+                        it.isSelected = !it.isSelected
+                        dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
+                        pickDates.add(getLongFromDate("${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"))
+                        holder.flDate.isSelected = it.isSelected
+                        switchBackground(holder.flDate, dateText)
+                        notifyDataSetChanged()
+                    }
                 }
             }
             is DateViewHolder -> {
                 mCalendar.add(Calendar.DATE, position - dateOffset)
                 holder.tvDate.text = mCalendar.get(Calendar.DATE).toString()
-
-                val fn = {
-                    pickDates.sort()
-                    if (pickDates.size == 1 && holder.tvDate.text.toString().toInt() == pickDates.first()) {
-                        holder.clDate.isSelected = true
-                        holder.clDate.background =
-                            ContextCompat.getDrawable(context, R.drawable.shape_circle)
-                    } else
-                        if (pickDates.isNotEmpty())
-                            when {
-                                holder.tvDate.text.toString().toInt() == pickDates.first() -> {
-                                    Log.e("pickDates.first()===", "${pickDates.first()}")
-                                    holder.clDate.isSelected = true
-                                    holder.clDate.background =
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.selector_left_shape
-                                        )
-                                }
-                                holder.tvDate.text.toString().toInt() == pickDates.last() -> {
-                                    Log.e("pickDates.last()===", "${pickDates.last()}")
-                                    holder.clDate.isSelected = true
-                                    holder.clDate.background =
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.selector_right_shape
-                                        )
-                                }
-                                (holder.tvDate.text.toString().toInt() in pickDates.first()..pickDates.last()) -> {
-                                    Log.e("pickDates.else()===", "${holder.tvDate.text}")
-                                    holder.clDate.isSelected = true
-                                    holder.clDate.background =
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.selector_mid_shape
-                                        )
-                                }
-                            }
-                }
-
-                fn()
+                val dateText = "${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"
+                switchBackground(holder.flDate, dateText)
 
                 holder.tvDate.setOnClickListener {
-                    it.isSelected = !it.isSelected
-                    dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
-                    pickDates.add(holder.tvDate.text.toString().toInt())
-                    holder.clDate.isSelected = it.isSelected
-                    fn()
-                    notifyDataSetChanged()
+                    if (pickDates.size < 2) {
+                        it.isSelected = !it.isSelected
+                        dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
+                        pickDates.add(getLongFromDate("${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"))
+                        holder.flDate.isSelected = it.isSelected
+                        switchBackground(holder.flDate, dateText)
+                        notifyDataSetChanged()
+                    }
                 }
             }
             is NonDateViewHolder -> {
                 mCalendar.add(Calendar.DATE, -dateOffset + position)
                 holder.tvDate.text = mCalendar.get(Calendar.DATE).toString()
-//                holder.clDate.background = ContextCompat.getDrawable(context, R.drawable.selector_mid_shape)
+//                holder.flDate.background = ContextCompat.getDrawable(context, R.drawable.selector_mid_shape)
             }
 
         }
@@ -202,7 +129,7 @@ class DateAdapter(
         val tvDate: TextView by lazy {
             view.findViewById<TextView>(R.id.tv_date)
         }
-        val clDate: FrameLayout by lazy {
+        val flDate: FrameLayout by lazy {
             view.findViewById<FrameLayout>(R.id.fl_date)
         }
     }
@@ -211,7 +138,7 @@ class DateAdapter(
         val tvDate: TextView by lazy {
             view.findViewById<TextView>(R.id.tv_date)
         }
-        val clDate: FrameLayout by lazy {
+        val flDate: FrameLayout by lazy {
             view.findViewById<FrameLayout>(R.id.fl_date)
         }
     }
@@ -220,7 +147,7 @@ class DateAdapter(
         val tvDate: TextView by lazy {
             view.findViewById<TextView>(R.id.tv_date)
         }
-        val clDate: FrameLayout by lazy {
+        val flDate: FrameLayout by lazy {
             view.findViewById<FrameLayout>(R.id.fl_date)
         }
     }
@@ -236,6 +163,46 @@ class DateAdapter(
     fun clearPickDates() {
         pickDates.clear()
         notifyDataSetChanged()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getLongFromDate(dateText: String): Long {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val dateTime = dateFormat.parse(dateText)
+        return dateTime!!.time
+
+    }
+
+    private fun switchBackground(bgLayout: FrameLayout, dateText: String) {
+        pickDates.sort()
+        if (pickDates.isEmpty())
+            bgLayout.isSelected = false
+
+        if (pickDates.size == 1 && getLongFromDate(dateText) == pickDates.first()) {
+            bgLayout.isSelected = true
+            bgLayout.background =
+                ContextCompat.getDrawable(context, R.drawable.shape_circle)
+        } else if (pickDates.isNotEmpty())
+            when {
+                getLongFromDate(dateText) == pickDates.first() -> {
+                    bgLayout.isSelected = true
+                    bgLayout.background = ContextCompat.getDrawable(
+                        context, R.drawable.selector_left_shape
+                    )
+                }
+                getLongFromDate(dateText) == pickDates.last() -> {
+                    bgLayout.isSelected = true
+                    bgLayout.background = ContextCompat.getDrawable(
+                        context, R.drawable.selector_right_shape
+                    )
+                }
+                (getLongFromDate(dateText) in pickDates.first()..pickDates.last()) -> {
+                    bgLayout.isSelected = true
+                    bgLayout.background = ContextCompat.getDrawable(
+                        context, R.drawable.selector_mid_shape
+                    )
+                }
+            }
     }
 
 }

@@ -35,14 +35,15 @@
                 android:id="@+id/tv_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/iceberg"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_round_month"
+                android:padding="3dp"
                 android:gravity="center"
                 android:text="Reset"
-                android:textColor="#D76735"
-                android:textSize="36dp" />
+                android:textColor="#DB324D"
+                android:textSize="26dp" />
 
             <TextView
                 android:id="@+id/tv_month"

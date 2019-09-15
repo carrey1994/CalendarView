@@ -5,7 +5,7 @@
             <!--            <item android:bottom="3dp" android:left="4dp" android:right="4dp" android:top="4dp">-->
             <item>
                 <shape android:shape="oval">
-                    <solid android:color="#FBD265" />
+                    <solid android:color="@color/color_true_date" />
                 </shape>
             </item>
             <!--            <item>-->
