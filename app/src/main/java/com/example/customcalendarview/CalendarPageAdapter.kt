@@ -80,8 +80,8 @@ class CalendarPageAdapter(
         this.monthChangerListener = monthListener
     }
 
-    override fun getItemPosition(`object`: Any): Int {
-        return POSITION_NONE
-    }
+//    override fun getItemPosition(`object`: Any): Int {
+//        return POSITION_NONE
+//    }
 
 }

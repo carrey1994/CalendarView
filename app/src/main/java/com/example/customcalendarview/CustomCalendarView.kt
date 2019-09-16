@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import androidx.fragment.app.FragmentActivity
+import kotlinx.android.synthetic.main.layout_calendar.view.*
 
 
 class CustomCalendarView : LinearLayout {
@@ -99,7 +100,8 @@ class CustomCalendarView : LinearLayout {
         tvClear.setOnClickListener {
             adapter.clearPickDates()
             CustomCalendarManager.pickDates.clear()
-            CustomCalendarManager.viewPager.adapter!!.notifyDataSetChanged()
+            notifyDataOverMonth()
+            CustomCalendarManager.notifyPositions.clear()
         }
 
         rvCalendar.layoutManager = GridLayoutManager(context, 7)
@@ -147,6 +149,16 @@ class CustomCalendarView : LinearLayout {
 
     fun setSwithContinue(isCheck: Boolean) {
         swContinue.isChecked = isCheck
+    }
+
+    private fun notifyDataOverMonth() {
+        CustomCalendarManager.notifyPositions.sort()
+        val startMonth = CustomCalendarManager.notifyPositions[0]
+        val endMonth = CustomCalendarManager.notifyPositions[1]
+        for (month in startMonth..endMonth) {
+            CustomCalendarManager.viewPager.findViewWithTag<CustomCalendarView>(month)
+                .rv_calendar.adapter!!.notifyDataSetChanged()
+        }
     }
 
 }

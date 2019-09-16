@@ -1,7 +1,5 @@
 package com.example.customcalendarview
 
-import android.annotation.SuppressLint
-import android.util.SparseArray
 import androidx.viewpager.widget.ViewPager
 
 object CustomCalendarManager {

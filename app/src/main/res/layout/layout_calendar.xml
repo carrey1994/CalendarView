@@ -40,9 +40,10 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/shape_round_month"
                 android:gravity="center"
-                android:padding="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="Reset"
-                android:textColor="#DB324D"
+                android:textColor="#3B7080"
                 android:textSize="26dp" />
 
             <Switch
@@ -51,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_clear"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_month"
