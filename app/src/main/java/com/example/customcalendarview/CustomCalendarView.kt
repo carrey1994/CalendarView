@@ -153,11 +153,17 @@ class CustomCalendarView : LinearLayout {
 
     private fun notifyDataOverMonth() {
         CustomCalendarManager.notifyPositions.sort()
-        val startMonth = CustomCalendarManager.notifyPositions[0]
-        val endMonth = CustomCalendarManager.notifyPositions[1]
-        for (month in startMonth..endMonth) {
+        if (CustomCalendarManager.notifyPositions.size == 1) {
+            val month = CustomCalendarManager.notifyPositions[0]
             CustomCalendarManager.viewPager.findViewWithTag<CustomCalendarView>(month)
                 .rv_calendar.adapter!!.notifyDataSetChanged()
+        } else if (CustomCalendarManager.notifyPositions.size == 2) {
+            val startMonth = CustomCalendarManager.notifyPositions[0]
+            val endMonth = CustomCalendarManager.notifyPositions[1]
+            for (month in startMonth..endMonth) {
+                CustomCalendarManager.viewPager.findViewWithTag<CustomCalendarView>(month)
+                    .rv_calendar.adapter!!.notifyDataSetChanged()
+            }
         }
     }
 
