@@ -85,20 +85,22 @@ class DateAdapter(
                 switchBackground(holder.flDate, dateText)
 
                 holder.tvDate.setOnClickListener {
-                    if (isContinue && !pickDates.contains(getLongFromDate(dateText))) {
+                    if (isContinue && checkOnly(dateText)) {
                         if (pickDates.size == 2) {
                             pickDates.clear()
+                        }
+                        if (notifyPositions.size == 2) {
+                            notifyDataOverMonth()
+                            notifyPositions.clear()
                         }
                         it.isSelected = !it.isSelected
                         dateListener.onDate(year, month + 1, "${holder.tvDate.text}".toInt())
                         pickDates.add(getLongFromDate(dateText))
-                        if (notifyPositions.contains(month).not())
-                            notifyPositions.add(month)
+                        notifyPositions.add(month)
                         holder.flDate.isSelected = it.isSelected
                         switchBackground(holder.flDate, dateText)
                         if (notifyPositions.size == 2) {
                             notifyDataOverMonth()
-                            notifyPositions.clear()
                         }
                         notifyDataSetChanged()
                     }
@@ -110,20 +112,22 @@ class DateAdapter(
                 val dateText = "${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"
                 switchBackground(holder.flDate, dateText)
                 holder.tvDate.setOnClickListener {
-                    if (isContinue && !pickDates.contains(getLongFromDate(dateText))) {
+                    if (isContinue && checkOnly(dateText)) {
                         if (pickDates.size == 2) {
                             pickDates.clear()
+                        }
+                        if (notifyPositions.size == 2) {
+                            notifyDataOverMonth()
+                            notifyPositions.clear()
                         }
                         it.isSelected = !it.isSelected
                         dateListener.onDate(year, month + 1, "${holder.tvDate.text}".toInt())
                         pickDates.add(getLongFromDate(dateText))
-                        if (notifyPositions.contains(month).not())
-                            notifyPositions.add(month)
+                        notifyPositions.add(month)
                         holder.flDate.isSelected = it.isSelected
                         switchBackground(holder.flDate, dateText)
                         if (notifyPositions.size == 2) {
                             notifyDataOverMonth()
-                            notifyPositions.clear()
                         }
                         notifyDataSetChanged()
                     }
@@ -141,6 +145,7 @@ class DateAdapter(
     }
 
     private fun notifyDataOverMonth() {
+        CustomCalendarManager.notifyPositions.sort()
         val startMonth = CustomCalendarManager.notifyPositions[0]
         val endMonth = CustomCalendarManager.notifyPositions[1]
         for (month in startMonth..endMonth) {
@@ -241,6 +246,10 @@ class DateAdapter(
                     bgLayout.isSelected = false
                 }
             }
+    }
+
+    private fun checkOnly(dateText: String): Boolean {
+        return !(pickDates.size == 1 && pickDates.contains(getLongFromDate(dateText)))
     }
 
 }
