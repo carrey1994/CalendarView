@@ -1,6 +1,9 @@
 package com.example.customcalendarview
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +20,7 @@ class CalendarPageAdapter(
     private lateinit var datePicker: DatePickerListener
     private lateinit var yearChangeListener: YearChangeListener
     private lateinit var monthChangerListener: MonthChangeListener
+    private var position = 0
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
 
@@ -43,6 +47,7 @@ class CalendarPageAdapter(
                 monthChangerListener.onMonthChangListener(month)
             }
         })
+        calendarView.tag = position
         container.addView(view)
         return view
     }
@@ -74,4 +79,9 @@ class CalendarPageAdapter(
     fun setMonthChangeListener(monthListener: MonthChangeListener) {
         this.monthChangerListener = monthListener
     }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
+
 }

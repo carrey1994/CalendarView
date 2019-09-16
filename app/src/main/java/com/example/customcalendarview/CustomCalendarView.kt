@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,8 @@ class CustomCalendarView : LinearLayout {
 
     private val tvClear: TextView
 
+    private val swContinue: Switch
+
     private lateinit var yearPicker: YearPicker
 
     private lateinit var monthPicker: MonthPicker
@@ -51,6 +54,17 @@ class CustomCalendarView : LinearLayout {
         tvMonth = view.findViewById(R.id.tv_month)
         rvCalendar = view.findViewById(R.id.rv_calendar)
         tvClear = view.findViewById(R.id.tv_clear)
+        swContinue = view.findViewById(R.id.sw_continue)
+
+        swContinue.setOnCheckedChangeListener { _, isCheck ->
+            if (isCheck) {
+                CustomCalendarManager.isContinue = true
+                adapter.isContinue = true
+            } else {
+                CustomCalendarManager.isContinue = true
+                adapter.isContinue = true
+            }
+        }
 
 
         //set year
@@ -84,6 +98,8 @@ class CustomCalendarView : LinearLayout {
 
         tvClear.setOnClickListener {
             adapter.clearPickDates()
+            CustomCalendarManager.pickDates.clear()
+            CustomCalendarManager.viewPager.adapter!!.notifyDataSetChanged()
         }
 
         rvCalendar.layoutManager = GridLayoutManager(context, 7)
@@ -127,6 +143,10 @@ class CustomCalendarView : LinearLayout {
 
     fun setMonthPickerListener(monthPicker: MonthPicker) {
         this.monthPicker = monthPicker
+    }
+
+    fun setSwithContinue(isCheck: Boolean) {
+        swContinue.isChecked = isCheck
     }
 
 }

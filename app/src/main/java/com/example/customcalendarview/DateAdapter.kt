@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.layout_calendar.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,9 +29,13 @@ class DateAdapter(
 
     private val dateOffset = mCalendar.get(Calendar.DAY_OF_WEEK) - 1
 
-    private val pickDates = arrayListOf<Long>()
+    private val pickDates = CustomCalendarManager.pickDates
+
+    private val notifyPositions = CustomCalendarManager.notifyPositions
 
     private lateinit var dateListener: DateListener
+
+    var isContinue = CustomCalendarManager.isContinue
 
     override fun getItemViewType(position: Int): Int {
         val type: Int
@@ -80,12 +85,21 @@ class DateAdapter(
                 switchBackground(holder.flDate, dateText)
 
                 holder.tvDate.setOnClickListener {
-                    if (pickDates.size < 2) {
+                    if (isContinue && !pickDates.contains(getLongFromDate(dateText))) {
+                        if (pickDates.size == 2) {
+                            pickDates.clear()
+                        }
                         it.isSelected = !it.isSelected
-                        dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
+                        dateListener.onDate(year, month + 1, "${holder.tvDate.text}".toInt())
                         pickDates.add(getLongFromDate(dateText))
+                        if (notifyPositions.contains(month).not())
+                            notifyPositions.add(month)
                         holder.flDate.isSelected = it.isSelected
                         switchBackground(holder.flDate, dateText)
+                        if (notifyPositions.size == 2) {
+                            notifyDataOverMonth()
+                            notifyPositions.clear()
+                        }
                         notifyDataSetChanged()
                     }
                 }
@@ -95,14 +109,22 @@ class DateAdapter(
                 holder.tvDate.text = mCalendar.get(Calendar.DATE).toString()
                 val dateText = "${holder.tvDate.text.toString().toInt()}/${month + 1}/$year"
                 switchBackground(holder.flDate, dateText)
-
                 holder.tvDate.setOnClickListener {
-                    if (pickDates.size < 2) {
+                    if (isContinue && !pickDates.contains(getLongFromDate(dateText))) {
+                        if (pickDates.size == 2) {
+                            pickDates.clear()
+                        }
                         it.isSelected = !it.isSelected
-                        dateListener.onDate(year, month + 1, holder.tvDate.text.toString().toInt())
+                        dateListener.onDate(year, month + 1, "${holder.tvDate.text}".toInt())
                         pickDates.add(getLongFromDate(dateText))
+                        if (notifyPositions.contains(month).not())
+                            notifyPositions.add(month)
                         holder.flDate.isSelected = it.isSelected
                         switchBackground(holder.flDate, dateText)
+                        if (notifyPositions.size == 2) {
+                            notifyDataOverMonth()
+                            notifyPositions.clear()
+                        }
                         notifyDataSetChanged()
                     }
                 }
@@ -116,6 +138,15 @@ class DateAdapter(
         }
 
         resetCalendar()
+    }
+
+    private fun notifyDataOverMonth() {
+        val startMonth = CustomCalendarManager.notifyPositions[0]
+        val endMonth = CustomCalendarManager.notifyPositions[1]
+        for (month in startMonth..endMonth) {
+            CustomCalendarManager.viewPager.findViewWithTag<CustomCalendarView>(month)
+                .rv_calendar.adapter!!.notifyDataSetChanged()
+        }
     }
 
     private fun resetCalendar() {

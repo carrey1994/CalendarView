@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
+import kotlinx.android.synthetic.main.layout_calendar.view.*
+import java.lang.Exception
 import java.util.*
 
 class CustomCalendarViewPager : LinearLayout {
@@ -62,6 +64,7 @@ class CustomCalendarViewPager : LinearLayout {
             }
         })
         vpCalendar.adapter = calendarPageAdapter
+        CustomCalendarManager.viewPager = vpCalendar
     }
 
 }
