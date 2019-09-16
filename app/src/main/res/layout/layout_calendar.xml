@@ -36,15 +36,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/shape_round_month"
+                android:background="@drawable/white_round_shape"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:shadowColor="#ffBB0A21"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="3"
                 android:text="Reset"
-                android:textColor="#3B7080"
-                android:textSize="26dp" />
+                android:textColor="#EB1A36"
+                android:textSize="18dp" />
 
             <Switch
                 android:id="@+id/sw_continue"
