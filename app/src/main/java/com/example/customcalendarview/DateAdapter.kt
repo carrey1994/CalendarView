@@ -198,11 +198,6 @@ class DateAdapter(
         this.dateListener = dateListener
     }
 
-    fun clearPickDates() {
-        pickDates.clear()
-        notifyDataSetChanged()
-    }
-
     @SuppressLint("SimpleDateFormat")
     fun getLongFromDate(dateText: String): Long {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")

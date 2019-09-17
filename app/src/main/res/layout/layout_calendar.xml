@@ -1,137 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00314F"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="15dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#FBD265"
-            android:paddingBottom="5dp">
-
-            <TextView
-                android:id="@+id/tv_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/iceberg"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:text="2019"
-                android:textColor="#D76735"
-                android:textSize="36dp" />
-
-            <TextView
-                android:id="@+id/tv_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/white_round_shape"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:shadowColor="#ffBB0A21"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="3"
-                android:text="Reset"
-                android:textColor="#EB1A36"
-                android:textSize="18dp" />
-
-            <Switch
-                android:id="@+id/sw_continue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_clear"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_year"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/shape_round_month"
-                android:fontFamily="@font/iceberg"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="DEC"
-                android:textColor="#D76735"
-                android:textSize="18dp" />
-
-            <LinearLayout
-                android:id="@+id/ll_weak"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_month"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp">
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="SUN" />
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="Mon" />
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="TUE" />
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="WED" />
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="THU" />
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="FRI" />
-
-                <TextView
-                    style="@style/dateOfWeek"
-                    android:text="SAT" />
-
-            </LinearLayout>
-
-
-        </RelativeLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_calendar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_below="@id/cv_layout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp" />
-
 
 </RelativeLayout>

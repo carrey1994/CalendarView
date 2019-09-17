@@ -25,7 +25,6 @@ class CalendarAdapter(private val context: Context) :
     override fun getItemCount(): Int = 12
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.customCalendarView.setMonth(position)
         holder.customCalendarView.setDateRecyclerView(position)
     }
 
